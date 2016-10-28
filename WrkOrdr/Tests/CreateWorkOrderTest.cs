@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Manufacturing.Domain;
+using Manufacturing.Domain.Handlers;
+using Manufacturing.Domain.Messages;
 using Ploeh.AutoFixture;
 using Raven.Client;
 using Should;
 using WrkOrdr.Configuration;
-using WrkOrdr.TestObjects;
-using WrkOrdr.TestObjects.Handlers;
-using WrkOrdr.TestObjects.Messages;
 
 namespace WrkOrdr.Tests
 {
@@ -18,12 +17,12 @@ namespace WrkOrdr.Tests
             RegisterDatabase();
         }
 
-        [Repeat(300)]
+        
         public void can_create_a_work_order()
         {
             var createMessage = _fixture.Build<CreateWorkOrderMessage>()
-                 .With(x => x.Status, WorkOrderStatus.NotStarted)
-                 .Create();
+                .With(x => x.Status, WorkOrderStatus.NotStarted)
+                .Create();
 
             var workOrder = Sut.Handle(createMessage);
 

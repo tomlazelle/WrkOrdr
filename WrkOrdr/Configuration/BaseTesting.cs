@@ -3,26 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using EventSource.Framework;
 using Manufacturing.Domain;
+using Manufacturing.Domain.Events;
+using Manufacturing.Domain.Handlers;
 using Ploeh.AutoFixture;
-using Raven.Abstractions.Indexing;
 using Raven.Client;
 using Raven.Client.Converters;
 using Raven.Client.Document;
-using Raven.Client.Embedded;
 using Raven.Client.Indexes;
-using Raven.Database.Linq.PrivateExtensions;
-using WrkOrdr.TestObjects;
-using WrkOrdr.TestObjects.Events;
-using WrkOrdr.TestObjects.Handlers;
 
 namespace WrkOrdr.Configuration
 {
     public abstract class BaseTesting<TClassUnderTest> : IBaseTest
-      where TClassUnderTest : class
+        where TClassUnderTest : class
     {
         protected IFixture _fixture;
 
         private TClassUnderTest _sut;
+
         protected TClassUnderTest Sut
         {
             get
@@ -55,10 +52,9 @@ namespace WrkOrdr.Configuration
         {
             var _store = new DocumentStore
             {
-                                                Url = "http://localhost:8080/", // server URL
-                                                DefaultDatabase = "EventSource",
+                Url = "http://localhost:8080/", // server URL
+                DefaultDatabase = "EventSource",
 //                RunInMemory = true,
-
             };
 
 //            _store.Configuration.Storage.Voron.AllowOn32Bits = true;
@@ -78,26 +74,5 @@ namespace WrkOrdr.Configuration
     }
 
 
-    public class Zip : AbstractIndexCreationTask<WorkOrderEvents, CreateWorkOrderItemEvent>
-    {
-        public Zip()
-        {
-            Map = wo => from parent in wo
-                        select new EventTypeResult
-                        {
-                            Id = parent.Id,
-                            OrderId = ((CreateWorkOrderEvent)parent.Events.FirstOrDefault(x => x.EventType == "CreateWorkOrderEvent")).OrderId,
-                            OrderItemId = ((CreateWorkOrderEvent)parent.Events.FirstOrDefault(x => x.EventType == "CreateWorkOrderEvent")).OrderItemId,
-                            Status = ((CreateWorkOrderEvent)parent.Events.FirstOrDefault(x => x.EventType == "CreateWorkOrderEvent")).Status
-                        };
-        }
-
-        public class EventTypeResult
-        {
-            public Guid Id { get; set; }
-            public int OrderId { get; set; }
-            public int OrderItemId { get; set; }
-            public WorkOrderStatus Status { get; set; }
-        }
-    }
+    
 }

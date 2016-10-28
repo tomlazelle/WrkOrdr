@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WrkOrdr.TestObjects
+namespace Manufacturing.Domain
 {
     public class WorkOrderItem
     {

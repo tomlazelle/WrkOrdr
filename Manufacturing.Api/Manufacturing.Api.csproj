@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -103,8 +104,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EventSource.Framework\EventSource.Framework.csproj">
+      <Project>{4db181d1-7b1f-4222-8319-65cd42ff411a}</Project>
+      <Name>EventSource.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Manufacturing.Domain\Manufacturing.Domain.csproj">
+      <Project>{BB444509-6EC5-4160-B7E5-42CE58BDAB41}</Project>
+      <Name>Manufacturing.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

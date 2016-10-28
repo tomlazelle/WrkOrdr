@@ -1,10 +1,15 @@
 ﻿using System;
 
-namespace WrkOrdr.TestObjects.Messages
+namespace Manufacturing.Domain.Messages
 {
     public class CreateWorkOrderMessage
     {
-        public Guid Id { get; set; }
+        public CreateWorkOrderMessage()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; private set; }
         public DateTime CreateDate { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? CompleteDate { get; set; }

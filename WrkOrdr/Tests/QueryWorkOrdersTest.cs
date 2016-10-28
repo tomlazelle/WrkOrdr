@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Manufacturing.Domain;
+using Manufacturing.Domain.Handlers;
+using Manufacturing.Domain.Messages;
 using Ploeh.AutoFixture;
 using Should;
 using WrkOrdr.Configuration;
-using WrkOrdr.TestObjects;
-using WrkOrdr.TestObjects.Handlers;
-using WrkOrdr.TestObjects.Messages;
 
 namespace WrkOrdr.Tests
 {

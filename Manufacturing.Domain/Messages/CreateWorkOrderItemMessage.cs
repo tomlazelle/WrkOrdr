@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WrkOrdr.TestObjects.Messages
+namespace Manufacturing.Domain.Messages
 {
     public class CreateWorkOrderItemMessage
     {

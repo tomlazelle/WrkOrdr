@@ -1,7 +1,7 @@
 ﻿using System;
 using EventSource.Framework;
 
-namespace WrkOrdr.TestObjects.Events
+namespace Manufacturing.Domain.Events
 {
     public class CreateWorkOrderEvent : VersionedEvent<Guid>
     {

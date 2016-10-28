@@ -1,7 +1,7 @@
 using System;
 using EventSource.Framework;
 
-namespace WrkOrdr.TestObjects.Handlers
+namespace Manufacturing.Domain.Handlers
 {
     public class WorkOrderEvents : EventContainer
     {

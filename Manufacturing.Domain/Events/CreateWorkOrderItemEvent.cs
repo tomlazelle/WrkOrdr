@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using EventSource.Framework;
 
-namespace WrkOrdr.TestObjects.Events
+namespace Manufacturing.Domain.Events
 {
     public class CreateWorkOrderItemEvent:VersionedEvent<Guid>
     {

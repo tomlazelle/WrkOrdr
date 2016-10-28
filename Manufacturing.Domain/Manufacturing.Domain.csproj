@@ -50,7 +50,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventStore.cs" />
+    <Compile Include="Events\CreateWorkOrderEvent.cs" />
+    <Compile Include="Events\CreateWorkOrderItemEvent.cs" />
+    <Compile Include="Handlers\WorkOrderEvents.cs" />
+    <Compile Include="Handlers\WorkOrderHandler.cs" />
+    <Compile Include="Handlers\WorkOrderQueryHandler.cs" />
+    <Compile Include="Indexes\WorkOrderIdIndex.cs" />
+    <Compile Include="Messages\CreateWorkOrderItemMessage.cs" />
+    <Compile Include="Messages\CreateWorkOrderMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkItemStatus.cs" />
+    <Compile Include="WorkOrder.cs" />
+    <Compile Include="WorkOrderItem.cs" />
+    <Compile Include="WorkOrderStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

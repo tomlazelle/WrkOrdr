@@ -1,8 +1,8 @@
 ﻿using EventSource.Framework;
-using WrkOrdr.TestObjects.Events;
-using WrkOrdr.TestObjects.Messages;
+using Manufacturing.Domain.Events;
+using Manufacturing.Domain.Messages;
 
-namespace WrkOrdr.TestObjects.Handlers
+namespace Manufacturing.Domain.Handlers
 {
     public class WorkOrderHandler :
         IMessageHandler<CreateWorkOrderMessage, WorkOrder>,

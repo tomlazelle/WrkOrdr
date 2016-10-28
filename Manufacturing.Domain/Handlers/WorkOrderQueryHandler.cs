@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Raven.Abstractions.Indexing;
+using Manufacturing.Domain.Indexes;
 using Raven.Client;
-using Raven.Client.Indexes;
-using WrkOrdr.Configuration;
-using WrkOrdr.TestObjects.Events;
 
-namespace WrkOrdr.TestObjects.Handlers
+namespace Manufacturing.Domain.Handlers
 {
     public class WorkOrderQueryHandler
     {
@@ -43,7 +40,7 @@ namespace WrkOrdr.TestObjects.Handlers
         {
             using (var session = _documentStore.OpenSession())
             {
-                return session.Query<Zip.EventTypeResult, Zip>()
+                return session.Query<WorkOrderIdIndex.EventTypeResult, WorkOrderIdIndex>()
                     .Where(x => x.OrderId == orderId)
                     .OfType<WorkOrderEvents>()
                     .ToList()

@@ -1,4 +1,4 @@
-﻿namespace WrkOrdr.TestObjects
+﻿namespace Manufacturing.Domain
 {
     public enum WorkOrderStatus
     {

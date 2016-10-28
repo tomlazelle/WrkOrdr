@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using EventSource.Framework;
-using WrkOrdr.TestObjects.Events;
-using WrkOrdr.TestObjects.Handlers;
+using Manufacturing.Domain.Events;
+using Manufacturing.Domain.Handlers;
 
-namespace WrkOrdr.TestObjects
+namespace Manufacturing.Domain
 {
     public class WorkOrder : BaseEntity<Guid>
     {

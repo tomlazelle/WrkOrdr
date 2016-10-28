@@ -1,5 +1,5 @@
 ﻿using System;
-using WrkOrdr.TestObjects.Events;
+using Manufacturing.Domain.Events;
 
 namespace WrkOrdr.Tests
 {
