@@ -1,22 +1,19 @@
-#tool nuget:?package=Fixie
-//////////////////////////////////////////////////////////////////////
-// ARGUMENTS
-//////////////////////////////////////////////////////////////////////
+#tool "nuget:?package=Fixie"
+#tool "nuget:?package=NUnit"
+// #tool "nuget:?package=AutoRest"
+// #tool "nuget:?package=Microsoft.Rest.ClientRuntime"
 
-var target = Argument("target", "Default");
+
+var buildTarget = Argument("target","Default");
 var configuration = Argument("configuration", "Release");
 
-//////////////////////////////////////////////////////////////////////
-// PREPARATION
-//////////////////////////////////////////////////////////////////////
-
-// Define directories.
+var workingFolder = Directory("./").ToString();
 var buildDir = Directory("./Manufacturing.Api/bin/") + Directory(configuration);
-var slnPath = "./WrkOrdr.sln";
 
-//////////////////////////////////////////////////////////////////////
-// TASKS
-//////////////////////////////////////////////////////////////////////
+var appName = "Manufacturing.Api";
+var version = "1.0.0.0";
+
+Task("Default").IsDependentOn("Run-Unit-Tests");
 
 Task("Clean")
     .Does(() =>
@@ -28,7 +25,7 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore(slnPath);
+    NuGetRestore("./WrkOrdr.sln");
 });
 
 Task("Build")
@@ -37,26 +34,113 @@ Task("Build")
 {
     
       // Use MSBuild
-      MSBuild(slnPath, settings =>
-        settings.SetConfiguration(configuration));    
+      MSBuild("./WrkOrdr.sln", settings =>
+        settings.SetConfiguration(configuration));
+    
 });
 
 Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-   Fixie("./WrkOrdr/bin/WrkOrdr.dll");
+   Fixie("./WrkOrdr.Tests/bin/WrkOrdr.Tests.dll",new FixieSettings {
+    NUnitXml = "TestResult.xml"
+    });
 });
 
-//////////////////////////////////////////////////////////////////////
-// TASK TARGETS
-//////////////////////////////////////////////////////////////////////
+// Task("Create-Directory")
+// .IsDependentOn("Run-Unit-Tests")
+// .Does(()=>{
 
-Task("Default")
- .IsDependentOn("Run-Unit-Tests");
+//   EnsureDirectoryExists("nuget");
+// });
 
-//////////////////////////////////////////////////////////////////////
-// EXECUTION
-//////////////////////////////////////////////////////////////////////
+// Task("Pack-Manufacturing-Api")
+//   .IsDependentOn("Create-Directory")
+//   .Does(() => {
 
-RunTarget(target);
+// var info = ParseAssemblyInfo("./Manufacturing.Api/Properties/AssemblyInfo.cs");
+
+    
+//     Information(info.Title);
+//     Information(info.Description);
+//     Information(info.Product);
+
+//        var nuGetPackSettings   = new NuGetPackSettings {
+//                                     Id                      = info.Product,
+//                                     Version                 = "1.0.0.0",
+//                                     Title                   = info.Title,
+//                                     Authors                 = new[] {"BuildASign"},
+//                                     Description             = info.Description,
+//                                     Summary                 = info.Description,
+//                                     ProjectUrl              = new Uri("https://github.com/buildasign/multi-carrier-shipping"),
+//                                     Files                   = new [] {
+//                                                                         new NuSpecContent {Source = @"*" ,Target = @"lib\net45\"},
+//                                                                       },
+//                                     BasePath                = "./bin",
+//                                     OutputDirectory         = "./nuget"
+//                                 };
+
+//     NuGetPack(nuGetPackSettings);
+// });
+
+ 
+
+  
+
+// Task("Generate-Swagger-Json")
+//   .IsDependentOn("Pack-Api")
+//   .Does(()=>{
+
+//     var root = System.IO.Directory.GetCurrentDirectory();
+//     var swagGen = System.IO.Path.GetFullPath(Directory("./tools/WebApiSwaggerGenerator/lib/net45").Path.FullPath) + @"\WebApiSwaggerGenerator.exe";
+    
+//     StartAndReturnProcess(swagGen,
+//       new ProcessSettings{
+//         Arguments = "-a" + root + @"\bin\ShippingServices.dll -o" + root + @"\swagger.json"
+//     });
+// });
+
+// Task("Generate-Api-SDK")
+//   .IsDependentOn("Generate-Swagger-Json")
+//   .Does(() =>
+// {
+//     var root = System.IO.Directory.GetCurrentDirectory();
+//     var autoRest = System.IO.Path.GetFullPath(Directory("./tools/autorest/tools").Path.FullPath) + @"\AutoRest.exe";
+
+//     StartProcess(autoRest,
+//       new ProcessSettings{
+//         Arguments= "-OutputDirectory " + root + @"\generated -Namespace BAS.ShippingService.Api.Client -Input " + root + @"\swagger.json -AddCredentials"
+//       });
+// }).ReportError(exception =>
+// {  
+//     Information(exception.ToString());
+// });
+
+// Task("Build-SDK")
+// .IsDependentOn("Generate-Api-SDK")
+// .Does(()=>{
+
+
+//   var parameters = new []{
+//     @"/recurse:{workingFolder}\generated\*.cs",
+//     @"/out:{workingFolder}\generated\BAS.ShippingService.Api.Client.dll",
+//     @"/reference:{workingFolder}\tools\Microsoft.Rest.ClientRuntime\lib\net45\Microsoft.Rest.ClientRuntime.dll",
+//     @"/reference:{workingFolder}\tools\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll",
+//     @"/reference:System.Net.Http.dll", 
+//     @"/target:library"  
+//   };
+
+//   var root = System.IO.Directory.GetCurrentDirectory();
+
+//   for (int i = 0; i < parameters.Length; i++)
+//   {
+//       parameters[i] = parameters[i].Replace("{workingFolder}",root);
+//   }
+
+  
+//   StartProcess(@"C:\Program Files (x86)\MSBuild\14.0\bin\csc.exe", string.Join(" ",parameters) + " ");
+
+// });
+
+RunTarget(buildTarget);

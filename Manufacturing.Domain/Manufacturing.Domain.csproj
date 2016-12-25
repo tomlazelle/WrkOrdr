@@ -49,20 +49,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregates\SalesOrder.cs" />
     <Compile Include="EventStore.cs" />
-    <Compile Include="Events\CreateWorkOrderEvent.cs" />
-    <Compile Include="Events\CreateWorkOrderItemEvent.cs" />
-    <Compile Include="Handlers\WorkOrderEvents.cs" />
-    <Compile Include="Handlers\WorkOrderHandler.cs" />
-    <Compile Include="Handlers\WorkOrderQueryHandler.cs" />
+    <Compile Include="Events\SalesOrders\CreateSalesOrderEvent.cs" />
+    <Compile Include="Events\WorkOrders\CreateWorkOrderEvent.cs" />
+    <Compile Include="Events\WorkOrders\CreateWorkOrderItemEvent.cs" />
+    <Compile Include="Handlers\SalesOrders\SalesOrderHandler.cs" />
+    <Compile Include="Handlers\WorkOrders\WorkOrderEvents.cs" />
+    <Compile Include="Handlers\WorkOrders\WorkOrderHandler.cs" />
+    <Compile Include="Handlers\WorkOrders\WorkOrderQueryHandler.cs" />
     <Compile Include="Indexes\WorkOrderIdIndex.cs" />
-    <Compile Include="Messages\CreateWorkOrderItemMessage.cs" />
-    <Compile Include="Messages\CreateWorkOrderMessage.cs" />
+    <Compile Include="Messages\SalesOrders\CreateSalesOrderMessage.cs" />
+    <Compile Include="Messages\WorkOrders\CreateWorkOrderItemMessage.cs" />
+    <Compile Include="Messages\WorkOrders\CreateWorkOrderMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkItemStatus.cs" />
-    <Compile Include="WorkOrder.cs" />
-    <Compile Include="WorkOrderItem.cs" />
-    <Compile Include="WorkOrderStatus.cs" />
+    <Compile Include="Aggregates\WorkItemStatus.cs" />
+    <Compile Include="Aggregates\WorkOrder.cs" />
+    <Compile Include="Aggregates\WorkOrderItem.cs" />
+    <Compile Include="Aggregates\WorkOrderStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

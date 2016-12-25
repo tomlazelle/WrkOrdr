@@ -2,7 +2,9 @@
 using System.Net.Http;
 using System.Web.Http;
 using Manufacturing.Domain.Handlers;
+using Manufacturing.Domain.Handlers.WorkOrders;
 using Manufacturing.Domain.Messages;
+using Manufacturing.Domain.Messages.WorkOrders;
 
 namespace Manufacturing.Api.Controllers
 {

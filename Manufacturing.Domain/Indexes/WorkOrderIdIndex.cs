@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Events;
+using Manufacturing.Domain.Events.WorkOrders;
 using Manufacturing.Domain.Handlers;
+using Manufacturing.Domain.Handlers.WorkOrders;
 using Raven.Client.Indexes;
 
 namespace Manufacturing.Domain.Indexes
