@@ -1,16 +1,19 @@
 ﻿using System;
 using EventSource.Framework;
 using Raven.Client;
+using StructureMap;
 
 namespace Manufacturing.Domain
 {
     public class EventStore : IEventStore
     {
         private readonly IDocumentStore documentStore;
+        private readonly ITypeActivator _typeActivator;
 
-        public EventStore(IDocumentStore documentStore)
+        public EventStore(IDocumentStore documentStore, ITypeActivator typeActivator)
         {
             this.documentStore = documentStore;
+            _typeActivator = typeActivator;
         }
 
         public bool Write<T>(T aggregate)
@@ -49,7 +52,9 @@ namespace Manufacturing.Domain
 
                 if (result == null)
                 {
-                    result = (TEventType)Activator.CreateInstance(typeof(TEventType), id);
+                    result =  _typeActivator.Instance<TEventType>();
+
+                    result.Init(id);
                     result.AddEvent(eventItem);
                     session.Store(result);
                 }
@@ -62,6 +67,26 @@ namespace Manufacturing.Domain
             }
 
             return (TEventType)result;
+        }
+    }
+
+    public interface ITypeActivator
+    {
+        T Instance<T>();
+    }
+
+    public class TypeActivator : ITypeActivator
+    {
+        private readonly IContainer _container;
+
+        public TypeActivator(IContainer container)
+        {
+            _container = container;
+        }
+
+        public T Instance<T>()
+        {
+            return _container.GetInstance<T>();
         }
     }
 }

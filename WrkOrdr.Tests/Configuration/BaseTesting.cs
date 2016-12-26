@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using EventSource.Framework;
+using Manufacturing.Common;
 using Manufacturing.Domain;
+using NSubstitute;
 using Ploeh.AutoFixture;
 using Raven.Client;
 using Raven.Client.Converters;
@@ -28,6 +31,9 @@ namespace WrkOrdr.Tests.Configuration
         public virtual void FixtureSetup(IFixture fixture)
         {
             _fixture = fixture;
+            var configMgr = Substitute.For<IConfigMgr>();
+            configMgr.Get<string>("ManufacturingDb").Returns("http://localhost:8080");
+            Register(configMgr);
         }
 
         public virtual void FixtureTearDown()
@@ -36,7 +42,7 @@ namespace WrkOrdr.Tests.Configuration
 
         protected void Register<TInterface>(TInterface concreteType)
         {
-            _fixture.Register(() => concreteType);
+            _fixture.Register<TInterface>(() => concreteType);
         }
 
         protected T MockType<T>()
@@ -50,10 +56,10 @@ namespace WrkOrdr.Tests.Configuration
             {
                 Url = "http://localhost:8080/", // server URL
                 DefaultDatabase = "EventSource",
-//                RunInMemory = true,
+                //                RunInMemory = true,
             };
 
-//            _store.Configuration.Storage.Voron.AllowOn32Bits = true;
+            //            _store.Configuration.Storage.Voron.AllowOn32Bits = true;
 
             _store.Initialize();
 
@@ -62,13 +68,22 @@ namespace WrkOrdr.Tests.Configuration
                 new GuidConverter()
             };
 
-//            IndexCreation.CreateIndexes(typeof(Zip).Assembly, _store);
+            //            IndexCreation.CreateIndexes(typeof(Zip).Assembly, _store);
+           
 
-            _fixture.Register<IDocumentStore>(() => _store);
-            _fixture.Register<IEventStore>(() => new EventStore(_store));
+            Register(new TestActivator());
+            Register<IDocumentStore>(_store);
+            Register<IEventStore>(new EventStore(_store, new TestActivator()));
+        }
+    }
+
+    public class TestActivator:ITypeActivator
+    {
+        public T Instance<T>()
+        {
+            return (T) Activator.CreateInstance(typeof(T));
         }
     }
 
 
-    
 }

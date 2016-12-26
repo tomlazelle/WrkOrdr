@@ -6,11 +6,11 @@ namespace EventSource.Framework
 {
     public abstract class EventContainer
     {
-        protected EventContainer(Guid id)
+        public void Init(Guid id)
         {
             Id = id;
         }
-
+        
         public void AddEvent(IVersionedEvent<Guid> eventItem)
         {
             var list = new List<IVersionedEvent<Guid>>();
