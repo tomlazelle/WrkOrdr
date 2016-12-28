@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EventSource.Framework;
 using Manufacturing.Common;
 using Manufacturing.Domain.Events.WorkOrders;
@@ -15,6 +16,22 @@ namespace Manufacturing.Domain.Aggregates
         {
             Handles<CreateWorkOrderEvent>(NewWorkOrder);
             Handles<CreateWorkOrderItemEvent>(AddWorkOrderItem);
+            Handles<UpdateWorkOrderStatusEvent>(StatusChanged);
+            Handles<UpdateWorkOrderItemStatusEvent>(ItemStatusChanged);
+        }
+
+        private void ItemStatusChanged(UpdateWorkOrderItemStatusEvent updateWorkOrderItemStatusEvent)
+        {
+            var item = _items.FirstOrDefault(x => x.Id == updateWorkOrderItemStatusEvent.ItemId);
+
+            _items.Remove(item);
+
+            _items.Add(new WorkOrderItem(item.Id,item.Sku, item.StartDate, item.CompleteDate, updateWorkOrderItemStatusEvent.Status, item.Details));
+        }
+
+        private void StatusChanged(UpdateWorkOrderStatusEvent updateWorkOrderStatusEvent)
+        {
+            Status = updateWorkOrderStatusEvent.Status;            
         }
 
         public WorkOrder(Guid id, WorkOrderEvents eventItems) : this(id)

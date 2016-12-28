@@ -2,7 +2,7 @@ using Ploeh.AutoFixture;
 
 namespace WrkOrdr.Tests.Configuration
 {
-    public interface IBaseTest
+    public interface ISubjectBase
     {
         void FixtureSetup(IFixture fixture);
         void FixtureTearDown();

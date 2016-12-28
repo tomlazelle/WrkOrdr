@@ -1,4 +1,6 @@
-﻿using EventSource.Framework;
+﻿using System;
+using EventSource.Framework;
+using Manufacturing.Common;
 using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Events.WorkOrders;
 using Manufacturing.Domain.Messages.WorkOrders;
@@ -7,7 +9,8 @@ namespace Manufacturing.Domain.Handlers.WorkOrders
 {
     public class WorkOrderHandler :
         IMessageHandler<CreateWorkOrderMessage, WorkOrder>,
-        IMessageHandler<CreateWorkOrderItemMessage, WorkOrder>
+        IMessageHandler<CreateWorkOrderItemMessage, WorkOrder>,
+        IMessageHandler<UpdateWorkOrderStatusMessage, WorkOrder>
     {
         private readonly IEventPublisher _eventPublisher;
         private readonly IEventStore _eventStore;
@@ -41,5 +44,30 @@ namespace Manufacturing.Domain.Handlers.WorkOrders
 
             return new WorkOrder(message.Id, workOrderEvents);
         }
+
+        public WorkOrder Handle(UpdateWorkOrderStatusMessage message)
+        {
+            var updateWorkOrderEvent = new UpdateWorkOrderStatusEvent(message.Id, message.Status);
+
+            var events = _eventStore.AddEvent<WorkOrderEvents>(message.Id, updateWorkOrderEvent);
+
+            var workOrder = new WorkOrder(message.Id, events);
+
+            if (message.Status == WorkOrderStatus.Canceled)
+            {
+                foreach (var workOrderItem in workOrder.Items)
+                {
+                    events = _eventStore.AddEvent<WorkOrderEvents>(message.Id, new UpdateWorkOrderItemStatusEvent(message.Id, workOrderItem.Id, WorkItemStatus.Canceled));
+                }
+            }
+
+            workOrder = new WorkOrder(message.Id, events);
+
+            //this is an over simplification of sending a message
+            _eventPublisher.Publish(message);
+
+            return workOrder;
+        }
+
     }
 }

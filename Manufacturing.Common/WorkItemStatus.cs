@@ -2,10 +2,12 @@ namespace Manufacturing.Common
 {
     public enum WorkItemStatus
     {
+        NotStarted,
         Started,
         Completed,
-        BatchComplete,
+        Canceled,
         Wasted,
-        New
+        Printing,
+        Finishing
     }
 }

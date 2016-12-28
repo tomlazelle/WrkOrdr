@@ -2,12 +2,11 @@ namespace Manufacturing.Common
 {
     public enum WorkOrderStatus
     {
-        InProgress,
         NotStarted,
-        Printing,
-        Batching,
-        UserCanceled,
-        OnHold,
-        BadArt
+        InProgress,        
+        Batched,
+        Canceled,
+        Hold,
+        Completed
     }
 }

@@ -4,26 +4,23 @@ using Manufacturing.Common;
 using Manufacturing.Domain.Handlers.WorkOrders;
 using Manufacturing.Domain.Messages.WorkOrders;
 using Ploeh.AutoFixture;
-using Raven.Client;
 using Should;
 using WrkOrdr.Tests.Configuration;
 
 namespace WrkOrdr.Tests.Tests
 {
-    public class CreateWorkOrderItemTest : Subject<WorkOrderHandler>
+    public class UpdateWorkOrderStatusTest:Subject<WorkOrderHandler>
     {
         public override void FixtureSetup(IFixture fixture)
         {
             base.FixtureSetup(fixture);
-
             RegisterDatabase();
         }
 
-        public void can_create_a_work_order_item()
-        {
+        public void can_change_status_to_canceled(){
             var createMessage = _fixture.Build<CreateWorkOrderMessage>()
-                .With(x => x.Status, WorkOrderStatus.NotStarted)
-                .Create();
+               .With(x => x.Status, WorkOrderStatus.NotStarted)
+               .Create();
 
             Sut.Handle(createMessage);
 
@@ -34,19 +31,17 @@ namespace WrkOrdr.Tests.Tests
                 .With(x => x.Details, _fixture.CreateMany<KeyValuePair<string, object>>(10).ToDictionary(k => k.Key, v => v.Value))
                 .Create();
 
+            //add work order item
+            Sut.Handle(itemMessage);
 
-            var workOrder = Sut.Handle(itemMessage);
-
-            workOrder.Items.FirstOrDefault().Details.Count.ShouldEqual(itemMessage.Details.Count);
-            workOrder.Version.ShouldEqual(2);
-
-            using (var session = _fixture.Create<IDocumentStore>().OpenSession())
+            var workOrder = Sut.Handle(new UpdateWorkOrderStatusMessage
             {
-                var foundEvent = session.Load<WorkOrderEvents>("WorkOrderEvents/" + createMessage.Id);
+                Id = createMessage.Id,
+                Status = WorkOrderStatus.Canceled
+            });
 
-                foundEvent.ShouldNotBeNull();
-                foundEvent.Events.Length.ShouldEqual(2);
-            }
+            workOrder.Status.ShouldEqual(WorkOrderStatus.Canceled);
+            workOrder.Items.First().Status.ShouldEqual(WorkItemStatus.Canceled);
         }
     }
 }

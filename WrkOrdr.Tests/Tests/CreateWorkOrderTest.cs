@@ -1,5 +1,4 @@
 ﻿using Manufacturing.Common;
-using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Handlers.WorkOrders;
 using Manufacturing.Domain.Messages.WorkOrders;
 using Ploeh.AutoFixture;
@@ -9,7 +8,7 @@ using WrkOrdr.Tests.Configuration;
 
 namespace WrkOrdr.Tests.Tests
 {
-    public class CreateWorkOrderTest : BaseTesting<WorkOrderHandler>
+    public class CreateWorkOrderTest : Subject<WorkOrderHandler>
     {
         public override void FixtureSetup(IFixture fixture)
         {
@@ -18,7 +17,7 @@ namespace WrkOrdr.Tests.Tests
             RegisterDatabase();
         }
 
-        
+
         public void can_create_a_work_order()
         {
             var createMessage = _fixture.Build<CreateWorkOrderMessage>()

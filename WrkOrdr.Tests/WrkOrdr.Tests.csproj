@@ -73,17 +73,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\BaseTesting.cs" />
+    <Compile Include="Configuration\Subject.cs" />
     <Compile Include="Configuration\BehaviorBuilderExtensions.cs" />
     <Compile Include="Configuration\FixtureSetupBehavior.cs" />
-    <Compile Include="Configuration\IBaseTest.cs" />
-    <Compile Include="Configuration\Subject.cs" />
+    <Compile Include="Configuration\ISubjectBase.cs" />
+    <Compile Include="Configuration\_Subject.cs" />
     <Compile Include="Configuration\TestConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CreateWorkOrderItemTest.cs" />
     <Compile Include="Tests\CreateWorkOrderTest.cs" />
     <Compile Include="Tests\QueryWorkOrdersTest.cs" />
     <Compile Include="Tests\TypeNameTest.cs" />
+    <Compile Include="Tests\UpdateWorkOrderStatusTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
