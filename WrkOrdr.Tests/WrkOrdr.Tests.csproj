@@ -84,6 +84,7 @@
     <Compile Include="Tests\CreateWorkOrderTest.cs" />
     <Compile Include="Tests\QueryWorkOrdersTest.cs" />
     <Compile Include="Tests\TypeNameTest.cs" />
+    <Compile Include="Tests\UpdateWorkOrderItemTest.cs" />
     <Compile Include="Tests\UpdateWorkOrderStatusTest.cs" />
   </ItemGroup>
   <ItemGroup>

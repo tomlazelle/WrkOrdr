@@ -10,7 +10,8 @@ namespace Manufacturing.Domain.Handlers.WorkOrders
     public class WorkOrderHandler :
         IMessageHandler<CreateWorkOrderMessage, WorkOrder>,
         IMessageHandler<CreateWorkOrderItemMessage, WorkOrder>,
-        IMessageHandler<UpdateWorkOrderStatusMessage, WorkOrder>
+        IMessageHandler<UpdateWorkOrderStatusMessage, WorkOrder>,
+        IMessageHandler<UpdateWorkOrderItemMessage, WorkOrder>
     {
         private readonly IEventPublisher _eventPublisher;
         private readonly IEventStore _eventStore;
@@ -69,5 +70,16 @@ namespace Manufacturing.Domain.Handlers.WorkOrders
             return workOrder;
         }
 
+        public WorkOrder Handle(UpdateWorkOrderItemMessage message)
+        {
+            var updateWorkOrderItem = new UpdateWorkOrderItemEvent(message.Id, message.ItemId, message.Sku, message.StartDate, message.CompleteDate, message.Details);
+
+            var events = _eventStore.AddEvent<WorkOrderEvents>(message.Id, updateWorkOrderItem);
+
+            //this is an over simplification of sending a message
+            _eventPublisher.Publish(message);
+
+            return new WorkOrder(message.Id,events);
+        }
     }
 }

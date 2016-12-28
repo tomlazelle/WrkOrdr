@@ -18,6 +18,16 @@ namespace Manufacturing.Domain.Aggregates
             Handles<CreateWorkOrderItemEvent>(AddWorkOrderItem);
             Handles<UpdateWorkOrderStatusEvent>(StatusChanged);
             Handles<UpdateWorkOrderItemStatusEvent>(ItemStatusChanged);
+            Handles<UpdateWorkOrderItemEvent>(ItemChanged);
+        }
+
+        private void ItemChanged(UpdateWorkOrderItemEvent updateWorkOrderItem)
+        {
+            var item = _items.FirstOrDefault(x => x.Id == updateWorkOrderItem.ItemId);
+
+            _items.Remove(item);
+
+            _items.Add(new WorkOrderItem(item.Id, updateWorkOrderItem.Sku, updateWorkOrderItem.StartDate, updateWorkOrderItem.CompleteDate, item.Status, updateWorkOrderItem.Details));
         }
 
         private void ItemStatusChanged(UpdateWorkOrderItemStatusEvent updateWorkOrderItemStatusEvent)
@@ -26,12 +36,12 @@ namespace Manufacturing.Domain.Aggregates
 
             _items.Remove(item);
 
-            _items.Add(new WorkOrderItem(item.Id,item.Sku, item.StartDate, item.CompleteDate, updateWorkOrderItemStatusEvent.Status, item.Details));
+            _items.Add(new WorkOrderItem(item.Id, item.Sku, item.StartDate, item.CompleteDate, updateWorkOrderItemStatusEvent.Status, item.Details));
         }
 
         private void StatusChanged(UpdateWorkOrderStatusEvent updateWorkOrderStatusEvent)
         {
-            Status = updateWorkOrderStatusEvent.Status;            
+            Status = updateWorkOrderStatusEvent.Status;
         }
 
         public WorkOrder(Guid id, WorkOrderEvents eventItems) : this(id)
