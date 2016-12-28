@@ -1,5 +1,6 @@
 ﻿using System;
 using EventSource.Framework;
+using Manufacturing.Common;
 using Manufacturing.Domain.Aggregates;
 
 namespace Manufacturing.Domain.Events.WorkOrders

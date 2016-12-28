@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Manufacturing.Common;
 using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Handlers.WorkOrders;
 using Manufacturing.Domain.Messages.WorkOrders;
@@ -9,7 +10,7 @@ using WrkOrdr.Tests.Configuration;
 
 namespace WrkOrdr.Tests.Tests
 {
-    public class QueryWorkOrdersTest:BaseTesting<WorkOrderQueryHandler>
+    public class QueryWorkOrdersTest : BaseTesting<WorkOrderQueryHandler>
     {
         public override void FixtureSetup(IFixture fixture)
         {
@@ -26,7 +27,7 @@ namespace WrkOrdr.Tests.Tests
                 .With(x => x.Status, WorkOrderStatus.NotStarted)
                 .Create();
 
-            handler.Handle(createMessage);
+            var workOrder = handler.Handle(createMessage);
 
             var itemMessage = _fixture
                 .Build<CreateWorkOrderItemMessage>()
@@ -38,8 +39,8 @@ namespace WrkOrdr.Tests.Tests
             handler.Handle(itemMessage);
 
 
-            var workOrders = Sut.Get();
-            workOrders.Count.ShouldBeGreaterThan(1);
+            var foundWorkOrder = Sut.Get(workOrder.Id);
+            foundWorkOrder.ShouldNotBeNull();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Manufacturing.Common;
 using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Events;
 using Manufacturing.Domain.Events.WorkOrders;

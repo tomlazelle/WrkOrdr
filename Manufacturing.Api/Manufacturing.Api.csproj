@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -112,6 +116,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\EnrichingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +136,10 @@
     <ProjectReference Include="..\EventSource.Framework\EventSource.Framework.csproj">
       <Project>{4db181d1-7b1f-4222-8319-65cd42ff411a}</Project>
       <Name>EventSource.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Manufacturing.Api.Models\Manufacturing.Api.Models.csproj">
+      <Project>{30AB6402-FC99-491E-9623-4F02949B6C8D}</Project>
+      <Name>Manufacturing.Api.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Manufacturing.Common\Manufacturing.Common.csproj">
       <Project>{A5D72B68-0E07-4E82-AF0D-A8BD7DCD279D}</Project>

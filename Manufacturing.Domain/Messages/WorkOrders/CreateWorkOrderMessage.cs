@@ -1,4 +1,5 @@
 ﻿using System;
+using Manufacturing.Common;
 using Manufacturing.Domain.Aggregates;
 
 namespace Manufacturing.Domain.Messages.WorkOrders

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using EventSource.Framework;
+using Manufacturing.Common;
 using Manufacturing.Domain.Events.WorkOrders;
 using Manufacturing.Domain.Handlers.WorkOrders;
 
@@ -21,9 +22,6 @@ namespace Manufacturing.Domain.Aggregates
             LoadEvents(eventItems.Events);
         }
 
-
-        public int OrderId { get; private set; }
-        public int OrderItemId { get; private set; }
 
         public DateTime CreateDate { get; private set; }
         public DateTime? StartDate { get; private set; }
@@ -57,9 +55,6 @@ namespace Manufacturing.Domain.Aggregates
         private void NewWorkOrder(CreateWorkOrderEvent createWorkOrderEvent)
         {
             CreateDate = createWorkOrderEvent.CreateDate;
-            OrderItemId = createWorkOrderEvent.OrderItemId;
-            OrderId = createWorkOrderEvent.OrderId;
-            OrderItemId = createWorkOrderEvent.OrderItemId;
             StartDate = createWorkOrderEvent.StartDate;
             CompleteDate = createWorkOrderEvent.CompleteDate;
             Status = createWorkOrderEvent.Status;

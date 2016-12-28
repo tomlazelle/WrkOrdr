@@ -1,4 +1,5 @@
-﻿using Manufacturing.Domain.Aggregates;
+﻿using Manufacturing.Common;
+using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Handlers.WorkOrders;
 using Manufacturing.Domain.Messages.WorkOrders;
 using Ploeh.AutoFixture;

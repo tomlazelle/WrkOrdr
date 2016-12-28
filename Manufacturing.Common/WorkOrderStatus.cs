@@ -1,4 +1,4 @@
-﻿namespace Manufacturing.Domain.Aggregates
+namespace Manufacturing.Common
 {
     public enum WorkOrderStatus
     {

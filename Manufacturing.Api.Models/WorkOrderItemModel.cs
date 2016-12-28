@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Manufacturing.Api.Models.Handlers;
 using Manufacturing.Common;
-using Manufacturing.Domain.Aggregates;
 
-namespace Manufacturing.Domain.Messages.WorkOrders
+namespace Manufacturing.Api.Models
 {
-    public class CreateWorkOrderItemMessage
+    public class WorkOrderItemModel : Resource
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Sku { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? CompleteDate { get; set; }

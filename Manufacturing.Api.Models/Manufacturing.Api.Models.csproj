@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BB444509-6EC5-4160-B7E5-42CE58BDAB41}</ProjectGuid>
+    <ProjectGuid>{30AB6402-FC99-491E-9623-4F02949B6C8D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Manufacturing.Domain</RootNamespace>
-    <AssemblyName>Manufacturing.Domain</AssemblyName>
+    <RootNamespace>Manufacturing.Api.Models</RootNamespace>
+    <AssemblyName>Manufacturing.Api.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,12 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Raven.Abstractions, Version=3.5.1.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.5.1\lib\net45\Raven.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Client.Lightweight, Version=3.5.1.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.5.1\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=4.4.2.472, Culture=neutral, processorArchitecture=MSIL">
@@ -43,42 +39,43 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregates\SalesOrder.cs" />
-    <Compile Include="Configuration\DomainRegistry.cs" />
-    <Compile Include="EventStore.cs" />
-    <Compile Include="Events\SalesOrders\CreateSalesOrderEvent.cs" />
-    <Compile Include="Events\WorkOrders\CreateWorkOrderEvent.cs" />
-    <Compile Include="Events\WorkOrders\CreateWorkOrderItemEvent.cs" />
-    <Compile Include="Handlers\SalesOrders\SalesOrderHandler.cs" />
-    <Compile Include="Handlers\WorkOrders\WorkOrderEvents.cs" />
-    <Compile Include="Handlers\WorkOrders\WorkOrderHandler.cs" />
-    <Compile Include="Handlers\WorkOrders\WorkOrderQueryHandler.cs" />
-    <Compile Include="Indexes\WorkOrderIdIndex.cs" />
-    <Compile Include="Messages\SalesOrders\CreateSalesOrderMessage.cs" />
-    <Compile Include="Messages\WorkOrders\CreateWorkOrderItemMessage.cs" />
-    <Compile Include="Messages\WorkOrders\CreateWorkOrderMessage.cs" />
+    <Compile Include="Configuration\ModelRegistry.cs" />
+    <Compile Include="Enrichers\WorkOrderModelEnrich.cs" />
+    <Compile Include="Handlers\MediaLinkFactory.cs" />
+    <Compile Include="Handlers\DefaultLink.cs" />
+    <Compile Include="Handlers\EditLink.cs" />
+    <Compile Include="Handlers\GetAllLink.cs" />
+    <Compile Include="Handlers\IMediaLinkFactory.cs" />
+    <Compile Include="Handlers\IResponseEnricher.cs" />
+    <Compile Include="Handlers\Link.cs" />
+    <Compile Include="Handlers\MediaLinkType.cs" />
+    <Compile Include="Handlers\Resource.cs" />
+    <Compile Include="Handlers\ResponseEnricher.cs" />
+    <Compile Include="Handlers\SelfLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Aggregates\WorkOrder.cs" />
-    <Compile Include="Aggregates\WorkOrderItem.cs" />
+    <Compile Include="WorkOrderItemModel.cs" />
+    <Compile Include="WorkOrderModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSource.Framework\EventSource.Framework.csproj">
-      <Project>{4DB181D1-7B1F-4222-8319-65CD42FF411A}</Project>
-      <Name>EventSource.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Manufacturing.Common\Manufacturing.Common.csproj">
       <Project>{A5D72B68-0E07-4E82-AF0D-A8BD7DCD279D}</Project>
       <Name>Manufacturing.Common</Name>

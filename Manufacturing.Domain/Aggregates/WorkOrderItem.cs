@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Manufacturing.Common;
 
 namespace Manufacturing.Domain.Aggregates
 {
