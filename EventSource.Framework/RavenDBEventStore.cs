@@ -1,16 +1,15 @@
 ﻿using System;
-using EventSource.Framework;
 using Raven.Client;
 using StructureMap;
 
-namespace Manufacturing.Domain
+namespace EventSource.Framework
 {
-    public class EventStore : IEventStore
+    public class RavenDBEventStore : IEventStore
     {
         private readonly IDocumentStore documentStore;
         private readonly ITypeActivator _typeActivator;
 
-        public EventStore(IDocumentStore documentStore, ITypeActivator typeActivator)
+        public RavenDBEventStore(IDocumentStore documentStore, ITypeActivator typeActivator)
         {
             this.documentStore = documentStore;
             _typeActivator = typeActivator;

@@ -18,5 +18,16 @@ namespace EventSource.Framework
         }
 
         public TId Id { get; }
+
+        public int Version { get; private set; }
+
+        protected void LoadEvents(IEnumerable<IVersionedEvent<TId>> pastEvents)
+        {
+            foreach (var e in pastEvents)
+            {
+                _handlers[e.GetType()].Invoke(e);
+                Version = e.Version;
+            }
+        }
     }
 }

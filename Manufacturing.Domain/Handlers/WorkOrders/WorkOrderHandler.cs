@@ -36,7 +36,12 @@ namespace Manufacturing.Domain.Handlers.WorkOrders
 
         public WorkOrder Handle(CreateWorkOrderMessage message)
         {
-            var createWorkOrderEvent = new CreateWorkOrderEvent(message.Id, message.CreateDate, message.StartDate, message.CompleteDate, message.OrderId, message.OrderItemId, message.Status);
+            var createWorkOrderEvent = new CreateWorkOrderEvent(
+                message.Id, 
+                message.CreateDate, 
+                message.StartDate, 
+                message.CompleteDate, 
+                message.Status);
 
             var workOrderEvents = _eventStore.AddEvent<WorkOrderEvents>(message.Id, createWorkOrderEvent);
 

@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\DomainRegistry.cs" />
-    <Compile Include="EventStore.cs" />
     <Compile Include="Events\WorkOrders\CreateWorkOrderEvent.cs" />
     <Compile Include="Events\WorkOrders\CreateWorkOrderItemEvent.cs" />
     <Compile Include="Events\WorkOrders\UpdateWorkOrderItemEvent.cs" />

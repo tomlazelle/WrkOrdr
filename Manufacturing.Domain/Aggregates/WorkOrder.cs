@@ -67,16 +67,7 @@ namespace Manufacturing.Domain.Aggregates
             }
         }
 
-        public int Version { get; private set; }
-
-        private void LoadEvents(IEnumerable<IVersionedEvent<Guid>> pastEvents)
-        {
-            foreach (var e in pastEvents)
-            {
-                _handlers[e.GetType()].Invoke(e);
-                Version = e.Version;
-            }
-        }
+       
 
 
         private void NewWorkOrder(CreateWorkOrderEvent createWorkOrderEvent)

@@ -1,6 +1,5 @@
 ﻿using System;
 using Manufacturing.Common;
-using Manufacturing.Domain.Aggregates;
 
 namespace Manufacturing.Domain.Messages.WorkOrders
 {
@@ -15,8 +14,6 @@ namespace Manufacturing.Domain.Messages.WorkOrders
         public DateTime CreateDate { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? CompleteDate { get; set; }
-        public int OrderId { get; set; }
-        public int OrderItemId { get; set; }
         public WorkOrderStatus Status { get; set; }
     }
 }

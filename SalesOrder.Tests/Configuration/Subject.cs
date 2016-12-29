@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using EventSource.Framework;
-using Manufacturing.Common;
-using Manufacturing.Domain;
 using NSubstitute;
 using Ploeh.AutoFixture;
 using Raven.Client;
 using Raven.Client.Converters;
 using Raven.Client.Document;
+using Sales.Common;
 
-namespace WrkOrdr.Tests.Configuration
+namespace Sales.Tests.Configuration
 {
     public abstract class Subject<TClassUnderTest> : ISubjectBase
         where TClassUnderTest : class
@@ -32,7 +30,7 @@ namespace WrkOrdr.Tests.Configuration
         {
             _fixture = fixture;
             var configMgr = Substitute.For<IConfigMgr>();
-            configMgr.Get<string>("ManufacturingDb").Returns("http://localhost:8080");
+            configMgr.Get<string>("SalesDb").Returns("http://localhost:8080");
             Register(configMgr);
         }
 
