@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using EventSource.Framework;
+using Sales.Common;
 using Sales.Domain.Events;
 using Sales.Domain.Handlers;
 
@@ -12,6 +13,12 @@ namespace Sales.Domain.Aggregates
         public SalesOrder(Guid id) : base(id)
         {
             Handles<SalesOrderCreatedEvent>(NewSalesOrder);
+            Handles<UpdateSalesOrderStatusEvent>(StatusChanged);
+        }
+
+        private void StatusChanged(UpdateSalesOrderStatusEvent updateSalesOrderStatusEvent)
+        {
+            Status = updateSalesOrderStatusEvent.Status;
         }
 
         private void NewSalesOrder(SalesOrderCreatedEvent salesOrderCreatedEvent)
@@ -26,6 +33,7 @@ namespace Sales.Domain.Aggregates
             Total = salesOrderCreatedEvent.Total;
             DollarsOff = salesOrderCreatedEvent.DollarsOff;
             DiscountPercent = salesOrderCreatedEvent.DiscountPercent;
+            Status = SalesOrderStatus.Open;
 
             Items = new List<OrderItem>();
             foreach (var itemEvent in salesOrderCreatedEvent.Items)
@@ -60,5 +68,6 @@ namespace Sales.Domain.Aggregates
         public decimal DollarsOff { get; private set; }
         public decimal DiscountPercent { get; private set; }
         public IList<OrderItem> Items { get; private set; }
+        public SalesOrderStatus Status { get; private set; }
     }
 }

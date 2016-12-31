@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using SystemNotifications;
-using AutoMapper;
 using EventSource.Framework;
 using Sales.Domain.Aggregates;
 using Sales.Domain.Events;
@@ -11,16 +9,15 @@ namespace Sales.Domain.Handlers
 {
     public class SalesOrderHandler : IMessageHandler<CreateSalesOrderMessage, SalesOrder>
     {
-        private IEventStore _eventStore;
         private IEventPublisher _eventPublisher;
-        
+        private IEventStore _eventStore;
+
         public SalesOrderHandler(
             IEventStore eventStore,
             IEventPublisher eventPublisher)
         {
             _eventStore = eventStore;
             _eventPublisher = eventPublisher;
-            
         }
 
         public SalesOrder Handle(CreateSalesOrderMessage message)
@@ -47,21 +44,26 @@ namespace Sales.Domain.Handlers
                     message.Customer.LastName,
                     message.Customer.Phone,
                     message.Customer.Email),
+                new Payment(
+                    message.Payment.PaymentType,
+                    message.Payment.Amount,
+                    message.Payment.PaymentDate,
+                    message.Payment.PayeeName),
                 message.OrderDate,
                 message.SubTotal,
                 message.Tax,
                 message.Total,
                 message.DollarsOff,
                 message.DiscountPercent,
-                message.Items.Select(x => 
-                new CreateOrderItemEvent(
-                    x.Sku,
-                    x.Quantity,
-                    x.WholeSalePrice,
-                    x.RetailPrice,
-                    x.DollarsOff,
-                    x.DiscountPercent,
-                    x.Details)).ToList());
+                message.Items.Select(x =>
+                    new CreateOrderItemEvent(
+                        x.Sku,
+                        x.Quantity,
+                        x.WholeSalePrice,
+                        x.RetailPrice,
+                        x.DollarsOff,
+                        x.DiscountPercent,
+                        x.Details)).ToList());
 
             var events = _eventStore.AddEvent<SalesOrderEvents>(message.Id, salesOrderCreatedEvent);
 
@@ -70,5 +72,14 @@ namespace Sales.Domain.Handlers
             return new SalesOrder(message.Id, events);
         }
 
+        public SalesOrder Handle(UpdateSalesOrderStatusMessage updateSalesOrderStatusMessage)
+        {
+            var events = _eventStore.AddEvent<SalesOrderEvents>(updateSalesOrderStatusMessage.Id,
+                new UpdateSalesOrderStatusEvent(updateSalesOrderStatusMessage.Id, updateSalesOrderStatusMessage.Status));
+
+            _eventPublisher.Publish(new SalesOrderStatusChanged());
+
+            return new SalesOrder(updateSalesOrderStatusMessage.Id, events);
+        }
     }
 }

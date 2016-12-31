@@ -7,13 +7,16 @@ namespace Sales.Domain.Events
 {
     public class SalesOrderCreatedEvent : VersionedEvent<Guid>
     {
-        public SalesOrderCreatedEvent(Guid id,Guid accountId, Address shippingAddress, Address billingAddress, Person customer, DateTime orderDate, decimal subTotal, decimal tax, decimal total, decimal dollarsOff, decimal discountPercent, IList<CreateOrderItemEvent> items)
+        public SalesOrderCreatedEvent(Guid id,Guid accountId, Address shippingAddress, Address billingAddress, 
+            Person customer,
+            Payment paymentData, DateTime orderDate, decimal subTotal, decimal tax, decimal total, decimal dollarsOff, decimal discountPercent, IList<CreateOrderItemEvent> items)
         {
             SourceId = id;
             AccountId = accountId;
             ShippingAddress = shippingAddress;
             BillingAddress = billingAddress;
             Customer = customer;
+            PaymentData = paymentData;
             OrderDate = orderDate;
             SubTotal = subTotal;
             Tax = tax;
@@ -26,6 +29,7 @@ namespace Sales.Domain.Events
         public Address ShippingAddress { get; }
         public Address BillingAddress { get; }
         public Person Customer { get; }
+        public Payment PaymentData { get; }
         public DateTime OrderDate { get; }
         public decimal SubTotal { get; }
         public decimal Tax { get; }
@@ -33,25 +37,6 @@ namespace Sales.Domain.Events
         public decimal DollarsOff { get; }
         public decimal DiscountPercent { get; }
         public IList<CreateOrderItemEvent> Items { get; }
-    }
-    public class CreateOrderItemEvent
-    {
-        public CreateOrderItemEvent(string sku, int quantity, decimal wholeSalePrice, decimal retailPrice, decimal dollarsOff, decimal discountPercent, IDictionary<string, object> details)
-        {
-            Sku = sku;
-            Quantity = quantity;
-            WholeSalePrice = wholeSalePrice;
-            RetailPrice = retailPrice;
-            DollarsOff = dollarsOff;
-            DiscountPercent = discountPercent;
-            Details = details;
-        }
-        public string Sku { get;}
-        public int Quantity { get;}
-        public decimal WholeSalePrice { get;}
-        public decimal RetailPrice { get;}
-        public decimal DollarsOff { get;}
-        public decimal DiscountPercent { get;}
-        public IDictionary<string, object> Details { get;}
+
     }
 }

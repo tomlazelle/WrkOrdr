@@ -11,6 +11,7 @@ namespace Sales.Domain.Messages
         public AddressMessage ShippingAddress { get; set; }
         public AddressMessage BillingAddress { get; set; }
         public PersonMessage Customer { get; set; }
+        public PaymentMessage Payment { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Tax { get; set; }

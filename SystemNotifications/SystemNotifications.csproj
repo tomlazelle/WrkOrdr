@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SalesOrderCreated.cs" />
+    <Compile Include="SalesOrderStatusChanged.cs" />
     <Compile Include="WorkOrderCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
