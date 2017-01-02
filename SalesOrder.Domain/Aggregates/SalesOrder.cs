@@ -69,5 +69,7 @@ namespace Sales.Domain.Aggregates
         public decimal DiscountPercent { get; private set; }
         public IList<OrderItem> Items { get; private set; }
         public SalesOrderStatus Status { get; private set; }
+        public SalesOrderTypes OrderType { get; private set; }
+        public Guid RefNo { get; private set; }
     }
 }

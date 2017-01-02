@@ -19,6 +19,8 @@ namespace Sales.Domain.Messages
         public decimal DollarsOff { get; set; }
         public decimal DiscountPercent { get; set; }
         public SalesOrderStatus Status { get; set; }
+        public SalesOrderTypes OrderType { get; set; }
+        public Guid RefNo { get; set; }
         public IList<CreateSalesOrderItemMessage> Items { get; set; }
     }
 }

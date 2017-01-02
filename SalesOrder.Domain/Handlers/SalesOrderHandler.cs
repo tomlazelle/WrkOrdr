@@ -55,6 +55,9 @@ namespace Sales.Domain.Handlers
                 message.Total,
                 message.DollarsOff,
                 message.DiscountPercent,
+               message.Status,
+               message.OrderType,
+               message.RefNo,
                 message.Items.Select(x =>
                     new CreateOrderItemEvent(
                         x.Sku,
