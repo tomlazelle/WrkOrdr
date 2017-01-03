@@ -2,6 +2,7 @@
 using System.Linq;
 using SystemNotifications;
 using EventSource.Framework;
+using Sales.Common;
 using Sales.Domain.Aggregates;
 using Sales.Domain.Events;
 using Sales.Domain.Messages;
@@ -101,11 +102,23 @@ namespace Sales.Domain.Handlers
                 createReturnMessage.Action,
                 createReturnMessage.Note,
                 DateTime.Now,
-                DateTime.Now.ToString("yyMMdd") + returnCnt.ToString().PadLeft(4, char.Parse("0"))));
+                DateTime.Now.ToString("yyMMdd") + returnCnt.ToString().PadLeft(4, char.Parse("0")),
+                ReturnStatus.Pending));
 
             _eventPublisher.Publish(new CustomerReturnCreated());
 
             return new SalesOrder(createReturnMessage.Id, events);
+        }
+
+        public SalesOrder Handle(UpdateReturnStatusMessage updateSalesOrderStatusMessage)
+        {
+            var events = _eventStore.AddEvent<SalesOrderEvents>(updateSalesOrderStatusMessage.Id,
+                new UpdateReturnStatusEvent(updateSalesOrderStatusMessage.Id, updateSalesOrderStatusMessage.Status,
+                updateSalesOrderStatusMessage.ReturnId));
+
+            _eventPublisher.Publish(new ReturnStatusChanged());
+
+            return new SalesOrder(updateSalesOrderStatusMessage.Id, events);
         }
     }
 }

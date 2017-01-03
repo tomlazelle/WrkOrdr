@@ -8,7 +8,8 @@ namespace Sales.Domain.Events
     {
         public CreateReturnEvent(Guid id, decimal amount, int quantity, 
             string sku, ReturnReasons reason, ReturnAction action, string note, DateTime returnDate,
-            string returnId)
+            string returnId,
+            ReturnStatus status)
         {
             SourceId = id;
             Amount = amount;
@@ -19,8 +20,10 @@ namespace Sales.Domain.Events
             Note = note;
             ReturnDate = returnDate;
             ReturnId = returnId;
-
+            Status = status;
         }
+
+        
 
         public string ReturnId;
         public decimal Amount { get; }
@@ -30,5 +33,6 @@ namespace Sales.Domain.Events
         public ReturnAction Action { get; }
         public string Note { get; }
         public DateTime ReturnDate { get; }
+        public ReturnStatus Status { get; }
     }
 }

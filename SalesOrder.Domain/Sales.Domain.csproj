@@ -67,6 +67,7 @@
     <Compile Include="Events\CreateReturnEvent.cs" />
     <Compile Include="Events\Payment.cs" />
     <Compile Include="Events\SalesOrderCreatedEvent.cs" />
+    <Compile Include="Events\UpdateReturnStatusEvent.cs" />
     <Compile Include="Events\UpdateSalesOrderStatusEvent.cs" />
     <Compile Include="Handlers\SalesOrderEvents.cs" />
     <Compile Include="Handlers\SalesOrderHandler.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Messages\CreateSalesOrderMessage.cs" />
     <Compile Include="Messages\PaymentMessage.cs" />
     <Compile Include="Messages\PersonMessage.cs" />
+    <Compile Include="Messages\UpdateReturnStatusMessage.cs" />
     <Compile Include="Messages\UpdateSalesOrderStatusMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

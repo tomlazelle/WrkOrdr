@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Sales.Common;
 
 namespace Sales.Domain.Aggregates
@@ -6,7 +8,10 @@ namespace Sales.Domain.Aggregates
     public class CustomerReturn
     {
         
-        public CustomerReturn(int id, decimal amount, int quantity, string sku, ReturnReasons reason, ReturnAction action, string note, DateTime returnDate, string returnId)
+        public CustomerReturn(int id, decimal amount, int quantity, 
+            string sku, ReturnReasons reason, ReturnAction action, List<string> notes, DateTime returnDate, 
+            string returnId,
+            ReturnStatus status)
         {            
             Id = id;
             Amount = amount;
@@ -14,10 +19,13 @@ namespace Sales.Domain.Aggregates
             Sku = sku;
             Reason = reason;
             Action = action;
-            Note = note;
+            _notes = notes;
             ReturnDate = returnDate;
             ReturnId = returnId;
+            Status = status;
         }
+
+        private List<string> _notes = new List<string>();
 
         public string ReturnId { get; }
         public int Id { get; }
@@ -26,7 +34,17 @@ namespace Sales.Domain.Aggregates
         public string Sku { get; }
         public ReturnReasons Reason { get; }
         public ReturnAction Action { get; }
-        public string Note { get; }
+
+        public IList<string> Notes
+        {
+            get
+            {
+                if (_notes == null) return _notes = new List<string>();
+                return _notes.AsReadOnly();
+            }
+        }
+
         public DateTime ReturnDate { get; }
+        public ReturnStatus Status { get; }
     }
 }
