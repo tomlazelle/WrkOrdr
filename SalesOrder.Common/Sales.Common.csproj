@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReturnAction.cs" />
+    <Compile Include="ReturnReasons.cs" />
     <Compile Include="DummyPublisher.cs" />
     <Compile Include="IConfigMgr.cs" />
     <Compile Include="PaymentTypes.cs" />

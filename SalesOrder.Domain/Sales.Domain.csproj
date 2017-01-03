@@ -58,17 +58,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\Address.cs" />
+    <Compile Include="Aggregates\CustomerReturn.cs" />
     <Compile Include="Aggregates\OrderItem.cs" />
     <Compile Include="Aggregates\Person.cs" />
     <Compile Include="Aggregates\SalesOrder.cs" />
     <Compile Include="Configuration\DomainRegistry.cs" />
     <Compile Include="Events\CreateOrderItemEvent.cs" />
+    <Compile Include="Events\CreateReturnEvent.cs" />
     <Compile Include="Events\Payment.cs" />
     <Compile Include="Events\SalesOrderCreatedEvent.cs" />
     <Compile Include="Events\UpdateSalesOrderStatusEvent.cs" />
     <Compile Include="Handlers\SalesOrderEvents.cs" />
     <Compile Include="Handlers\SalesOrderHandler.cs" />
     <Compile Include="Messages\AddressMessage.cs" />
+    <Compile Include="Messages\CreateReturnMessage.cs" />
     <Compile Include="Messages\CreateSalesOrderItemMessage.cs" />
     <Compile Include="Messages\CreateSalesOrderMessage.cs" />
     <Compile Include="Messages\PaymentMessage.cs" />
