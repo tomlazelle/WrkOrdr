@@ -120,5 +120,14 @@ namespace Sales.Domain.Handlers
 
             return new SalesOrder(updateSalesOrderStatusMessage.Id, events);
         }
+
+        public SalesOrder Handle(AddReturnNoteMessage addReturnNoteMessage)
+        {
+            var events = _eventStore.AddEvent<SalesOrderEvents>(addReturnNoteMessage.Id,
+               new AddReturnNoteEvent(addReturnNoteMessage.Id, addReturnNoteMessage.Note, addReturnNoteMessage.ReturnId));
+
+            
+            return new SalesOrder(addReturnNoteMessage.Id, events);
+        }
     }
 }

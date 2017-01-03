@@ -20,6 +20,29 @@ namespace Sales.Domain.Aggregates
             Handles<UpdateSalesOrderStatusEvent>(StatusChanged);
             Handles<CreateReturnEvent>(ReturnCreated);
             Handles<UpdateReturnStatusEvent>(ClaimStatusChanged);
+            Handles<AddReturnNoteEvent>(ReturnNoteAdded);
+        }
+
+        private void ReturnNoteAdded(AddReturnNoteEvent addReturnNoteEvent)
+        {
+            var claim = _returns.FirstOrDefault(x => x.ReturnId == addReturnNoteEvent.ReturnId);
+
+            _returns.Remove(claim);
+
+            var notes = claim.Notes.ToList();
+
+            notes.Add(addReturnNoteEvent.Note);
+
+            _returns.Add(new CustomerReturn(claim.Id,
+                claim.Amount,
+                claim.Quantity,
+                claim.Sku,
+                claim.Reason,
+                claim.Action,
+                notes.ToList(),
+                claim.ReturnDate,
+                claim.ReturnId,
+                claim.Status));
         }
 
         public SalesOrder(Guid id, SalesOrderEvents eventItems)

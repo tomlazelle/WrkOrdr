@@ -63,6 +63,7 @@
     <Compile Include="Aggregates\Person.cs" />
     <Compile Include="Aggregates\SalesOrder.cs" />
     <Compile Include="Configuration\DomainRegistry.cs" />
+    <Compile Include="Events\AddReturnNoteEvent.cs" />
     <Compile Include="Events\CreateOrderItemEvent.cs" />
     <Compile Include="Events\CreateReturnEvent.cs" />
     <Compile Include="Events\Payment.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Handlers\SalesOrderEvents.cs" />
     <Compile Include="Handlers\SalesOrderHandler.cs" />
     <Compile Include="Messages\AddressMessage.cs" />
+    <Compile Include="Messages\AddReturnNoteMessage.cs" />
     <Compile Include="Messages\CreateReturnMessage.cs" />
     <Compile Include="Messages\CreateSalesOrderItemMessage.cs" />
     <Compile Include="Messages\CreateSalesOrderMessage.cs" />
