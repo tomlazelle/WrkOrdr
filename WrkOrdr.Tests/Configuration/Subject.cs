@@ -4,11 +4,13 @@ using System.Security.Cryptography.X509Certificates;
 using EventSource.Framework;
 using Manufacturing.Common;
 using Manufacturing.Domain;
+using Manufacturing.Domain.EventStores;
 using NSubstitute;
 using Ploeh.AutoFixture;
 using Raven.Client;
 using Raven.Client.Converters;
 using Raven.Client.Document;
+using ITypeActivator = EventSource.Framework.ITypeActivator;
 
 namespace WrkOrdr.Tests.Configuration
 {

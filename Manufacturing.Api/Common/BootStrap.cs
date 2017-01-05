@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using EventSource.Framework;
 using Manufacturing.Api.Models;
-using Manufacturing.Common;
 using Manufacturing.Domain.Aggregates;
 using Manufacturing.Domain.Configuration;
 using StructureMap;
@@ -33,7 +31,7 @@ namespace Manufacturing.Api.Common
         {
             return new Container(x =>
             {
-                x.For<IEventPublisher>().Use<DummyPublisher>();
+               
                 x.For<IMapper>().Singleton().Use(SetupAutoMapper());
             });
         }

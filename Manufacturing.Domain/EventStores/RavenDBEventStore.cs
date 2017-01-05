@@ -1,8 +1,9 @@
 ﻿using System;
+using EventSource.Framework;
 using Raven.Client;
 using StructureMap;
 
-namespace EventSource.Framework
+namespace Manufacturing.Domain.EventStores
 {
     public class RavenDBEventStore : IEventStore
     {
@@ -51,7 +52,7 @@ namespace EventSource.Framework
 
                 if (result == null)
                 {
-                    result =  _typeActivator.Instance<TEventType>();
+                    result = _typeActivator.Instance<TEventType>();
 
                     result.Init(id);
                     result.AddEvent(eventItem);
@@ -60,7 +61,7 @@ namespace EventSource.Framework
                 else
                 {
                     result.AddEvent(eventItem);
-                }                
+                }
 
                 session.SaveChanges();
             }
@@ -68,24 +69,5 @@ namespace EventSource.Framework
             return (TEventType)result;
         }
     }
-
-    public interface ITypeActivator
-    {
-        T Instance<T>();
-    }
-
-    public class TypeActivator : ITypeActivator
-    {
-        private readonly IContainer _container;
-
-        public TypeActivator(IContainer container)
-        {
-            _container = container;
-        }
-
-        public T Instance<T>()
-        {
-            return _container.GetInstance<T>();
-        }
-    }
+    
 }

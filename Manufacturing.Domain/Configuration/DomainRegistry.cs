@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using EventSource.Framework;
 using Manufacturing.Common;
+using Manufacturing.Domain.EventStores;
 using Manufacturing.Domain.Handlers.WorkOrders;
 using Raven.Client;
 using Raven.Client.Converters;
@@ -16,8 +17,8 @@ namespace Manufacturing.Domain.Configuration
             For<IDocumentStore>().Singleton().Use(x=>CreateNewStore(x));
             ForConcreteType<WorkOrderHandler>();            
             For<IEventStore>().Use<RavenDBEventStore>();
+            For<IEventPublisher>().Use<DummyPublisher>();
 
-            
         }
 
         private IDocumentStore CreateNewStore(IContext context)
